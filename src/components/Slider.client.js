@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import { SlideImage, StyledSlider } from "./SlideImage.client";
-import { useSwipeable } from "react-swipeable";
+// import { useSwipeable } from "react-swipeable";
 
 import {
   FaChevronRight,
@@ -11,12 +11,12 @@ export default function Slider({slides}){
   const [current, setCurrent] = useState(0);
   const length = slides.length;
 
-  const handlers = () =>{
-      useSwipeable({
-          onSwipedLeft: ()=>setCurrent(current === length - 1 ? 0 : current + 1),
-          onSwipedRight: ()=>setCurrent(current === 0 ? length - 1 : current - 1)
-      })
-  }
+  // const handlers = () =>{
+  //     useSwipeable({
+  //         onSwipedLeft: ()=>setCurrent(current === length - 1 ? 0 : current + 1),
+  //         onSwipedRight: ()=>setCurrent(current === 0 ? length - 1 : current - 1)
+  //     })
+  // }
 
 //   const nextSlide = () => {
 //     setCurrent(current === length - 1 ? 0 : current + 1);
@@ -26,8 +26,15 @@ export default function Slider({slides}){
 //     setCurrent(current === 0 ? length - 1 : current - 1);
 //   };
 
+  const [xValues, setXValues] = useState([])
+
   return (
-    <div className='slider' {...handlers}>
+    <div className='slider' 
+    // {...handlers} 
+    onTouchMove={(e)=>{
+      console.log(e.targetTouches[0].screenX)
+      setXValues(e.targetTouches[0].screenX)
+    }}>
       {/* <FaChevronLeft
         className="left-arrow"
         onClick={prevSlide}
