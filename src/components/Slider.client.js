@@ -1,48 +1,48 @@
-import React, { useState } from "react";
-// import { SlideImage, StyledSlider } from "./SlideImage.client";
-// import { useSwipeable } from "react-swipeable";
-
-import {
-  FaChevronRight,
-  FaChevronLeft,
-} from "react-icons/fa";
+import React, { useEffect, useState } from "react";
 
 export default function Slider({slides}){
   const [current, setCurrent] = useState(0);
-  const length = slides.length;
+  const [swipe, setSwipe] = useState("none");
+  const [xValues, setXValues] = useState([0, 0, 0])
 
-  // const handlers = () =>{
-  //     useSwipeable({
-  //         onSwipedLeft: ()=>setCurrent(current === length - 1 ? 0 : current + 1),
-  //         onSwipedRight: ()=>setCurrent(current === 0 ? length - 1 : current - 1)
-  //     })
-  // }
+  function handleSwipe(e) {
+    const x = e.touches[0].screenX;
+    setXValues(prevXValues => [x, ...prevXValues.slice(0, 2)])
+  }
 
-//   const nextSlide = () => {
-//     setCurrent(current === length - 1 ? 0 : current + 1);
-//   };
+  useEffect(()=> {
+    if(xValues[0] > xValues[1] && xValues[1] > xValues[2]) {
+      setSwipe("right")
+      return
+    }
+    if(xValues[0] < xValues[1] && xValues[1] < xValues[2]) {
+      setSwipe("left")
+      return
+    }
+    setSwipe("none")
+  }, [xValues])
 
-//   const prevSlide = () => {
-//     setCurrent(current === 0 ? length - 1 : current - 1);
-//   };
-
-  const [xValues, setXValues] = useState([])
+  useEffect(() => {
+    console.log(swipe)
+    if(swipe === "left"){
+      setCurrent(c => c === 0 ? slides.length-1 : c-1)
+      return
+    }
+    if(swipe === "right") {
+      setCurrent(c => (c+1)%slides.length )
+      return
+    }
+    if(swipe === "none") {
+      setXValues([0, 0, 0])
+      return
+    }
+  }, [swipe])
 
   return (
     <div className='slider' 
-    // {...handlers} 
-    onTouchMove={(e)=>{
-      console.log(e.targetTouches[0].screenX)
-      setXValues(e.targetTouches[0].screenX)
-    }}>
-      {/* <FaChevronLeft
-        className="left-arrow"
-        onClick={prevSlide}
-      />
-      <FaChevronRight
-        className="right-arrow"
-        onClick={nextSlide}
-      /> */}
+      onTouchMove={handleSwipe}
+      onTouchMoveCapture={()=>setSwipe("none")}
+    >
       {slides.map((slide, index) => {
         return (
           <div key={index}>
@@ -55,4 +55,3 @@ export default function Slider({slides}){
     </div>
   );
 };
-
