@@ -1,0 +1,35 @@
+.App {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  
+.right-arrow {
+position: absolute;
+top: 50%;
+right: 30rem;
+font-size: 2rem;
+}
+
+.left-arrow {
+position: absolute;
+top: 50%;
+left: 30rem;
+font-size: 2rem;
+}
+
+.sliderImage {
+width: 400px;
+height: 300px;
+object-fit: cover;
+}
+
+.slider{
+position: relative;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+@media screen and (max-width:600px){
+    
+}
