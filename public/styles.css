@@ -1,7 +1,7 @@
 .App {
     font-family: sans-serif;
     text-align: center;
-  }
+}
   
 .right-arrow {
 position: absolute;
@@ -28,6 +28,13 @@ position: relative;
 display: flex;
 justify-content: center;
 align-items: center;
+}
+
+.swiper{
+  display: flex;
+  overflow-x: visible;
+  transition-property: transform;
+  will-change: transform;
 }
 
 @media screen and (max-width:600px){

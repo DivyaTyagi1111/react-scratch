@@ -45,7 +45,7 @@ export default function Slider({slides}){
     >
       {slides.map((slide, index) => {
         return (
-          <div key={index}>
+          <div className='swiper' key={index}>
             {index === current && (
               <img className='sliderImage' src={slide.image} alt="" />
             )}
